@@ -26,6 +26,7 @@ export const ArticleMap = (sequelize: Sequelize) => {
         tags: {
           type: DataTypes.ARRAY(DataTypes.STRING),
           allowNull: true,
+          defaultValue: [],
         },
       },
       {

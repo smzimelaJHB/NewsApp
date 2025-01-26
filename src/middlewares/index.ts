@@ -16,21 +16,13 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
         const token = req?.cookies?.['news_app'] || "";
 
         if (!token) {
-            console.log("No token provided");
-            res.sendStatus(401); // End the request-response cycle here
-            return;
+            return res.redirect('/admin/users/login');
         }
-
-        console.log("Token received");
-
         const decoded = await jwt.verify(token, jwt_secret);
-
-        console.log("JWT verified successfully");
         req.identity = decoded;
 
         next(); // Call the next middleware
     } catch (error) {
-        console.error("Authentication error:", error);
-        res.sendStatus(401); // End the request-response cycle here
+        return res.redirect('/error')
     }
 };

@@ -17,7 +17,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
         const allArticles = response.data.articles; // Update based on actual structure
 
         if (!Array.isArray(allArticles)) {
-            throw new Error('Articles data is not an array');
+            return res.render('error')
         }
 
         const totalArticles = allArticles.length;
@@ -38,8 +38,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
             search // Include search term to prefill search input
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).send({ error: 'An error occurred while fetching data' });
+        return res.render('error')
     }
 });
 

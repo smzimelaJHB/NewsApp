@@ -32,7 +32,7 @@ router.get('/', getAllArticles);
 router.get('/:id', getArticleById);
 
 // POST - create article with images
-router.post('/',upload.single('imagep'),createArticle);
+router.post('/',upload.single('imagep'),isAuthenticated,createArticle);
 
 // PUT - update article with images
 router.put('/:id',isAuthenticated, updateArticle);

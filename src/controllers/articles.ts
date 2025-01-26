@@ -53,13 +53,14 @@ export const getArticleById = async (req: Request, res: Response) => {
 // Create a new article
 export const createArticle = async (req: Request, res: Response) => {
   ArticleMap(database);
-  const { title, content, tags } = req.body; 
+  const { title, content } = req.body; 
 
   let image = req?.file?.filename || ""
+  const tags = req?.body?.tags.split(",") || []
 
   try {
     const newArticle = await Article.create({  title, content, image, tags  });
-    res.status(201).json({ article: newArticle });
+    res.redirect("/dashboard")
   } catch (error) {
     res.status(400).json({ message: 'Error creating article', error });
   }
