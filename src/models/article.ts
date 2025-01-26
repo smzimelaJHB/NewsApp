@@ -4,8 +4,8 @@ import { Model, Sequelize, DataTypes } from 'sequelize';
 export default class Article extends Model {
   public title?: string;
   public content?: string;
-  public author?: string;
-  public attachments?: string[]; 
+  public image?: string;
+  public tags?: string[]; 
 }
 
 export const ArticleMap = (sequelize: Sequelize) => {
@@ -19,11 +19,11 @@ export const ArticleMap = (sequelize: Sequelize) => {
           type: DataTypes.TEXT,
           allowNull: false,
         },
-        author: {
+        image: {
           type: DataTypes.STRING(255),
-          allowNull: false,
+          allowNull: true,
         },
-        attachments: {
+        tags: {
           type: DataTypes.ARRAY(DataTypes.STRING),
           allowNull: true,
         },

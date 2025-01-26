@@ -19,7 +19,7 @@ router.get('/', getAllArticles);
 router.get('/:id', getArticleById);
 
 // POST - create article with images
-router.post('/',isAuthenticated,createArticle);
+router.post('/',createArticle);
 
 // PUT - update article with images
 router.put('/:id',isAuthenticated, updateArticle);
