@@ -8,6 +8,19 @@ import {
   searchArticles
 } from '../controllers/articles';
 import { isAuthenticated} from "../middlewares";
+import multer from 'multer';
+
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './src/assets/images')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
+const upload = multer({ storage: storage })
 
 
 const router = Router();
@@ -19,7 +32,7 @@ router.get('/', getAllArticles);
 router.get('/:id', getArticleById);
 
 // POST - create article with images
-router.post('/',createArticle);
+router.post('/',upload.single('imagep'),createArticle);
 
 // PUT - update article with images
 router.put('/:id',isAuthenticated, updateArticle);

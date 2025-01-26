@@ -7,9 +7,26 @@ import { Op, Sequelize } from 'sequelize';
 // Get all articles
 export const getAllArticles = async (req: Request, res: Response) => {
   ArticleMap(database);
+  const query  = req?.query?.search;
   try {
-    const articles = await Article.findAll();
-    res.status(200).json({ articles:articles});
+    if (query) {
+      try {
+        const articles = await Article.findAll({
+          where: {
+            [Op.or]: [
+              { title: { [Op.like]: `%${query}%` } },
+              Sequelize.literal(`array_to_string("tags", ',') LIKE '%${query}%'`)
+            ],
+          },
+        });
+        res.status(200).json({ articles });
+      } catch (error) {
+        res.status(500).json({ message: 'Error searching articles', error });
+      }
+    }else{
+      const articles = await Article.findAll();
+      res.status(200).json({ articles:articles});
+    }
   } catch (error) {
     res.status(500).json({ message: 'Error fetching articles', error });
   }
@@ -36,7 +53,10 @@ export const getArticleById = async (req: Request, res: Response) => {
 // Create a new article
 export const createArticle = async (req: Request, res: Response) => {
   ArticleMap(database);
-  const { title, content, image, tags } = req.body; 
+  const { title, content, tags } = req.body; 
+
+  let image = req?.file?.filename || ""
+
   try {
     const newArticle = await Article.create({  title, content, image, tags  });
     res.status(201).json({ article: newArticle });
@@ -86,7 +106,7 @@ export const deleteArticle = async (req: Request, res: Response) => {
 // // Search articles by title or content
 export const searchArticles = async (req: Request, res: Response): Promise<void> => {
   ArticleMap(database);
-  const { query } = req.body;
+  const { query } = req.params;
 
   if (!query) {
     res.status(400).json({ message: 'Search query is required' });
