@@ -1,32 +1,8 @@
 import axios from 'axios';
 import { Router, Request, Response } from 'express';
-import { base_url,articles_per_page} from '../config';
+import { base_url,articles_per_page } from '../config';
 
 const router = Router();
-
-router.get('/articles/:id', async (req: Request, res: Response): Promise<void> => {
-    try {
-        const articleId = req.params.id; // Extract article ID from URL params
-
-        if (!articleId) {
-            return res.render('error', { message: 'Article ID is required.' });
-        }
-
-        // Fetch the article by ID
-        const response = await axios.get(`${base_url}/articles/${articleId}`);
-
-        if (!response.data || !response.data.article) {
-            return res.render('error', { message: 'Article not found.' });
-        }
-
-        // Render the article page with the retrieved data
-        res.render('article.ejs', { article: response.data.article });
-    } catch (err) {
-        console.error('Error fetching article:', err);
-        return res.render('error', { message: 'An error occurred while fetching the article.' });
-    }
-});
-
 
 router.get('/', async (req: Request, res: Response): Promise<void> => {
     try {
@@ -67,6 +43,44 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     }
 });
 
+
+router.get('/article', async (req: Request, res: Response): Promise<void> => {
+    try {
+        const page = parseInt(req.query.page as string) || 1; // Current page number
+        const search = req.query.search as string || ''; // Search query
+        const articlesPerPage = 1; // Only one article per page
+
+        // Fetch articles from the API with optional search parameter
+        const response = await axios.get(`${base_url}/articles`, {
+            params: { search } // Pass search query to API
+        });
+        const allArticles = response.data.articles; // Update based on actual structure
+
+        if (!Array.isArray(allArticles)) {
+            return res.render('error')
+        }
+
+        const totalArticles = allArticles.length;
+
+        // Paginate the articles
+        const startIndex = (page - 1) * articlesPerPage;
+        const paginatedArticles = allArticles.slice(startIndex, startIndex + articlesPerPage);
+        const hasPrevious = page > 1;
+        const hasNext = page < Math.ceil(totalArticles / articlesPerPage);
+
+        // Render the page
+        res.render('article.ejs', {
+            articles: paginatedArticles, // Pass only the current article
+            hasPrevious,
+            hasNext,
+            previousPage: page - 1,
+            nextPage: page + 1,
+            search // Include search term to prefill search input
+        });
+    } catch (err) {
+        return res.render('error')
+    }
+});
 
 
 
