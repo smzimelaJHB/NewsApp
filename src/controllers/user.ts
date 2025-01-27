@@ -72,8 +72,8 @@ export const createUser = async (req: Request, res: Response) => {
 
   try {
     const newUser = await User.create({ name, username, password, salt});
-    res.status(201).json({ user: newUser });
+    return res.redirect('/admin/users/login');
   } catch (error) {
-    res.status(400).json({ message: 'Error creating user', error });
+    return res.redirect('/admin/users/login');
   }
 };
