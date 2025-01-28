@@ -32,10 +32,10 @@ router.get('/', getAllArticles);
 router.get('/:id', getArticleById);
 
 // POST - create article with images
-router.post('/',upload.single('imagep'),isAuthenticated,createArticle);
+router.post('/',isAuthenticated,upload.single('imagep'),createArticle);
 
 // PUT - update article with images
-router.put('/:id',isAuthenticated, updateArticle);
+router.put('/:id',isAuthenticated,upload.single('imagep'),updateArticle);
 
 // DELETE - delete article and its images
 router.delete('/:id',isAuthenticated, deleteArticle);

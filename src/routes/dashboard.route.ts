@@ -23,4 +23,16 @@ router.get('/article/add', isAuthenticated, (req, res) => {
 
 });
 
+
+router.get('/article/edit/:id', isAuthenticated, (req, res) => {
+    const articleId = req.params.id; 
+    axios.get(`${base_url}/articles/${articleId}`)
+        .then(function(article) {
+            return res.render("admin/dashboard/edit_article", article.data);
+        })
+        .catch(err => {
+            return res.render('error');
+        });
+});
+
 export default router;

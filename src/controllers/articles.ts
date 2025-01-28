@@ -76,7 +76,8 @@ export const updateArticle = async (req: Request, res: Response) => {
     const article = await Article.findByPk(id);
     if (article) {
       await article.update({  title, content, image, tags  });
-      res.status(200).json({ article });
+      //res.status(200).json({ article });
+      res.redirect("/dashboard")
     } else {
       res.status(404).json({ message: 'Article not found' });
     }

@@ -8,8 +8,8 @@
         <img src="/images/<%= article.image %>" alt="<%= article.title %>" class="img-fluid" style="max-height: 50px;">
       </td>
       <td>
-        <a href="/articles/edit/<%= article.id %>" class="btn btn-sm btn-warning">Edit</a>
-        <a href="/articles/delete/<%= article.id %>" class="btn btn-sm btn-danger">Delete</a>
+        <a href="dashboard/article/edit/<%= article.id %>" class="btn btn-sm btn-warning">Edit</a>
+        <a href="dashboard/article/delete/<%= article.id %>" class="btn btn-sm btn-danger">Delete</a>
       </td>
     </tr>
 <% }); %>

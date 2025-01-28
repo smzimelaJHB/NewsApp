@@ -1,0 +1,96 @@
+<!-- Include Header -->
+<%- include('include/_header.ejs') %>
+<!-- /Include Header -->
+
+<!-- Main Site -->
+<main id="site-main" class="py-5">
+  <div class="container">
+    <!-- Navigation -->
+    <div class="box-nav d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <a href="/dashboard" class="btn btn-secondary">
+          <i class="fas fa-angle-double-left"></i> Back to All Articles
+        </a>
+      </div>
+    </div>
+
+    <!-- Page Title -->
+    <div class="form-title text-center mb-4">
+      <h2 class="text-dark">Edit Article</h2>
+      <p class="text-muted">Use the form below to update the article details.</p>
+    </div>
+
+    <!-- Edit Article Form -->
+    <form action="/articles" method="POST" id="update_article" enctype="multipart/form-data">
+      <div class="new_article border p-4 rounded bg-light">
+        <!-- Title -->
+        <div class="form-group mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value="<%= article.title %>"
+            class="form-control"
+            placeholder="Enter the title"
+            required
+          />
+        </div>
+
+        <!-- Content -->
+        <div class="form-group mb-3">
+          <label for="content" class="form-label">Content</label>
+          <textarea
+            id="content"
+            name="content"
+            class="form-control"
+            rows="5"
+            placeholder="Enter the content"
+            required
+          ><%= article.content %></textarea>
+        </div>
+
+        <!-- Tags -->
+        <div class="form-group mb-3">
+          <label for="tags" class="form-label">Tags</label>
+          <input
+            type="text"
+            id="tags"
+            name="tags"
+            value="<%= article.tags %>"
+            class="form-control"
+            placeholder="Add tags (comma-separated)"
+          />
+        </div>
+
+        <!-- Image -->
+        <div class="form-group mb-3">
+          <label for="imagep" class="form-label">Upload Image</label>
+          <input
+            type="file"
+            id="imagep"
+            name="imagep"
+            class="form-control"
+          />
+          <!-- Show current image -->
+          <% if (article.image) { %>
+            <div class="mt-2">
+              <img src="/uploads/<%= article.image %>" alt="Current Image" class="img-fluid" style="max-width: 150px;"/>
+              <p class="text-muted small">Current Image</p>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group text-center">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+<!-- /Main Site -->
+
+<!-- Include Footer -->
+<%- include('include/_footer.ejs') %>
+<!-- /Include Footer -->
