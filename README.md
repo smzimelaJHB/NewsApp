@@ -7,6 +7,11 @@ This is a scalable news web application built using Node.js, Express.js, EJS tem
 
 ### Authentication
 - **Admin Login**:
+  - admin login default username and password
+  ```bash 
+    username: xman@gmail.com 
+    password: xman 
+  ```
   - Only admins can log in.
   - Authentication implemented using session-based or token-based methods.
 
