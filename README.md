@@ -58,8 +58,7 @@ This is a scalable news web application built using Node.js, Express.js, EJS tem
 ## Installation Steps
 
 ### Prerequisites
-- Node.js (v16 or above)
-- PostgreSQL (v13 or above)
+- Node.js (v20.11.1)
 - TypeScript
 
 ### Steps
@@ -73,12 +72,8 @@ This is a scalable news web application built using Node.js, Express.js, EJS tem
    npm install
    ```
 3. Set up the database:
-   - Create a PostgreSQL database.
-   - Update the `.env` file with the database credentials:
-     ```env
-     DB_URL=database-url
-     ```
-     ```
+   - Remote database on neon already set up , url provided on `.env.example`
+
 4. Build the TypeScript code:
    ```bash
    npm run build
@@ -89,12 +84,11 @@ This is a scalable news web application built using Node.js, Express.js, EJS tem
    ```
 
 ## Running Locally
-1. Start the PostgreSQL server.
-2. Run the following command:
+1. Run the following command:
    ```bash
    npm run dev
    ```
-3. Access the app in your browser at `http://localhost:3000`.
+2. Access the app in your browser at `http://localhost:3000`.
 
 ## Key Scripts
 - `npm run dev`: Start the app in development mode.
